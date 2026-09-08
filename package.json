@@ -1,0 +1,10 @@
+{
+  "name": "bt10-media-local",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check script.js"
+  },
+  "type": "module"
+}

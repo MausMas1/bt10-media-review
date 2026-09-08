@@ -1,0 +1,9 @@
+# Local development files
+.DS_Store
+node_modules/
+npm-debug.log*
+
+# Environment-specific settings and private keys
+.env
+.env.*
+!.env.example
