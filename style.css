@@ -70,3 +70,51 @@
 .project-open{font-size:0;overflow:hidden}
 .project-arrow{width:21px;height:21px;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.16,1,.3,1)}
 .project-card:hover .project-arrow,.project-card:focus-visible .project-arrow{transform:translate(1px,-1px)}
+
+/* Review-iteratie: consistente iconen, duidelijke contactacties en compacte mobiele opening. */
+.icon{display:inline-block;width:1.15em;height:1.15em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+.icon-play{fill:currentColor;stroke:none;width:.85em;height:.85em}
+.header nav .nav-contact span{display:inline-flex;align-items:center}
+.image-cross .icon{width:14px;height:14px}
+.acquaintance-link .icon{transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.acquaintance-link:hover .icon,.acquaintance-link:focus-visible .icon{transform:rotate(135deg)}
+.contact-bottom{align-items:center}
+.contact-bottom>.contact-profiles{min-width:360px;gap:18px}
+.contact-profiles .text-link{display:flex;gap:12px;align-items:center;min-height:60px;padding:16px;border:1px solid var(--line);border-radius:4px;transition:border-color .25s,color .25s,background .25s}
+.contact-profiles .text-link:hover,.contact-profiles .text-link:focus-visible{border-color:var(--accent);background:#d2ee9508}
+.contact-profiles .social-icon{width:23px;height:23px;color:var(--ink)}
+.contact-profiles .social-label{font-size:13px;color:inherit;flex:1}
+.contact-profiles .text-link>span:last-child{font-size:16px}
+.footer-socials a{display:inline-flex;gap:7px;align-items:center;min-height:44px}
+.footer-socials .social-icon{width:17px;height:17px}
+.footer-socials a:hover{color:var(--accent)}
+@media(max-width:850px){.contact-bottom{align-items:flex-start;flex-direction:column}.contact-bottom>.contact-profiles{width:100%;max-width:420px;min-width:0}}
+@media(max-width:700px){
+ .header{height:68px}
+ .header .brand{width:78px}
+ .header nav{top:67px}
+ .hero{padding-top:16px}
+ .hero-top{margin-bottom:17px}
+ .hero-identity{gap:6px}
+ .hero-identity>strong{font-size:25px}
+ .hero-stage{gap:20px}
+ .hero h1{font-size:clamp(36px,11.6vw,76px);line-height:1.02;letter-spacing:-.065em}
+ .hero-copy>p{margin-top:14px;font-size:12px;line-height:1.6}
+ .hero-copy>.round-link{margin-top:14px}
+ .hero-portrait{height:clamp(220px,31svh,290px);margin-left:0}
+ .hero-portrait>img{object-position:50% 57%}
+ .hero-portrait figcaption{left:16px;right:16px;bottom:14px;font-size:10px}
+ .hero-bottom{padding:18px 0}
+ .contact-bottom>.contact-profiles{display:flex;gap:12px}
+ .contact-bottom .text-link{margin-top:0;padding:13px 11px;gap:8px}
+ .contact-profiles .social-label{font-size:12px}
+ .contact-profiles .social-icon{width:21px;height:21px}
+ .footer-socials{gap:12px;flex-wrap:wrap}
+ .footer-socials a{gap:5px}
+}
+@media(max-width:700px) and (max-height:700px){
+ .hero-top{margin-bottom:14px}
+ .hero-stage{gap:16px}
+ .hero-portrait{height:210px}
+}
+@media(prefers-reduced-motion:reduce){.acquaintance-link .icon,.contact-profiles .text-link{transition:none}}
