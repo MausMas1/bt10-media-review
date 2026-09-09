@@ -1,6 +1,19 @@
 'use strict';
 document.documentElement.classList.add('js');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mobileViewport = window.matchMedia('(max-width: 700px)');
+
+// Op touchscreens is hover niet beschikbaar. Laat de hero-foto daarom kleur
+// krijgen zodra de bezoeker begint te scrollen, maar alleen op mobiel.
+function revealMobileHeroColour() {
+  if (mobileViewport.matches && window.scrollY > 12) {
+    document.documentElement.classList.add('mobile-scrolled');
+    window.removeEventListener('scroll', revealMobileHeroColour);
+  }
+}
+window.addEventListener('scroll', revealMobileHeroColour, { passive: true });
+revealMobileHeroColour();
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
