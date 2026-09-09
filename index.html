@@ -8,6 +8,13 @@
   <title>BT10 Media — Bruce Tol · Eindredacteur</title>
   <link rel="icon" href="assets/favicon-bt.png" type="image/png">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Houd de hero-foto tijdens het laden direct in de juiste mobiele beginstand. */
+    @media (max-width: 700px) {
+      .hero-portrait > img { filter: grayscale(1) brightness(.83); }
+      .mobile-scrolled .hero-portrait > img { filter: grayscale(0) brightness(.88); }
+    }
+  </style>
   <script src="script.js" defer></script>
 </head>
 <body>
