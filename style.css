@@ -65,3 +65,8 @@
  .js .reveal{opacity:1;transform:none;transition:none}
  .hero h1>span,.hero-portrait,.hero-copy>p,.hero-copy>.round-link{animation:none}
 }
+
+/* De projectpijl is een eigen SVG, geen systeememoji op iOS. */
+.project-open{font-size:0;overflow:hidden}
+.project-arrow{width:21px;height:21px;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.project-card:hover .project-arrow,.project-card:focus-visible .project-arrow{transform:translate(1px,-1px)}
