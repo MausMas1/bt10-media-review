@@ -8,6 +8,13 @@
   <title>BT10 Media — Bruce Tol · Eindredacteur</title>
   <link rel="icon" href="assets/favicon-bt.png" type="image/png">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Houd de hero-foto tijdens het laden direct in de juiste mobiele beginstand. */
+    @media (max-width: 700px) {
+      .hero-portrait > img { filter: grayscale(1) brightness(.83); }
+      .mobile-scrolled .hero-portrait > img { filter: grayscale(0) brightness(.88); }
+    }
+  </style>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -71,7 +78,12 @@
   </main>
   <footer><a class="brand" href="#home" aria-label="BT10 Media — naar boven"><img src="assets/logo-bt10-transparent.png" alt="BT10 Media" width="105" height="49"></a><p>Bruce Tol · Eindredactie & media</p><div class="footer-socials"><a href="https://www.instagram.com/bruceeee10/" target="_blank" rel="noopener noreferrer"><svg class="icon social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram</span> <svg class="icon icon-ne" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M6 6h12v12"/></svg></a><a href="https://www.linkedin.com/in/brucetol/" target="_blank" rel="noopener noreferrer"><svg class="icon social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7.5 10v7m4-7v7m0-4c0-4 5-4 5 0v4"/><circle cx="7.5" cy="7" r=".7" fill="currentColor" stroke="none"/></svg><span>LinkedIn</span> <svg class="icon icon-ne" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div><span>© <span id="year">2026</span> BT10 Media</span></footer>
 
-  <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title"><button class="dialog-close" aria-label="Sluit project"><svg class="icon icon-close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button><img id="project-dialog-image" alt=""><div class="dialog-copy"><p class="eyebrow" id="project-dialog-category"></p><h2 id="project-dialog-title"></h2><p id="project-dialog-description"></p><div id="project-stories"></div><div id="project-gallery" class="project-gallery" aria-label="Projectbeelden"></div><button class="text-link" id="project-video-button">Bekijk de clip <span><svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7Z"/></svg></span></button></div></dialog>
+  <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title"><button class="dialog-close" aria-label="Sluit project"><svg class="icon icon-close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button><button class="project-cover photo-open" aria-label="Bekijk projectfoto schermvullend"><img id="project-dialog-image" alt=""><span class="photo-hint">Vergroot</span></button><div class="dialog-copy"><p class="eyebrow" id="project-dialog-category"></p><h2 id="project-dialog-title"></h2><p id="project-dialog-description"></p><div id="project-stories"></div><div id="project-gallery" class="project-gallery" aria-label="Projectbeelden"></div><button class="text-link" id="project-video-button">Bekijk de clip <span><svg class="icon icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m8 5 11 7-11 7Z"/></svg></span></button></div></dialog>
   <dialog id="video-dialog" class="video-dialog" aria-labelledby="video-dialog-title"><div class="video-heading"><h2 id="video-dialog-title"></h2><button class="dialog-close" aria-label="Sluit video"><svg class="icon icon-close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><video id="video-player" controls playsinline preload="none"></video><p class="video-error" hidden>Deze video kan niet worden afgespeeld. <a id="video-download" href="" download>Download de clip</a> om hem lokaal te bekijken.</p></dialog>
+<dialog id="photo-dialog" class="photo-dialog" aria-labelledby="photo-title">
+    <div class="photo-toolbar"><h2 id="photo-title"></h2><button class="dialog-close" aria-label="Sluit fotogalerij"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+    <div class="photo-stage"><img id="photo-full" alt=""><button class="photo-prev photo-nav" aria-label="Vorige foto"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m7-7-7 7 7 7"/></svg></button><button class="photo-next photo-nav" aria-label="Volgende foto"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-7-7 7 7-7 7"/></svg></button></div>
+    <div class="photo-footer" aria-live="polite" aria-atomic="true"><p id="photo-caption"></p><span id="photo-count"></span></div>
+  </dialog>
 </body>
 </html>

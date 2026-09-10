@@ -1,6 +1,19 @@
 'use strict';
 document.documentElement.classList.add('js');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mobileViewport = window.matchMedia('(max-width: 700px)');
+
+// Op touchscreens is hover niet beschikbaar. Laat de hero-foto daarom kleur
+// krijgen zodra de bezoeker begint te scrollen, maar alleen op mobiel.
+function revealMobileHeroColour() {
+  if (mobileViewport.matches && window.scrollY > 12) {
+    document.documentElement.classList.add('mobile-scrolled');
+    window.removeEventListener('scroll', revealMobileHeroColour);
+  }
+}
+window.addEventListener('scroll', revealMobileHeroColour, { passive: true });
+revealMobileHeroColour();
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -61,6 +74,7 @@ const projects = {
     gallery: [{image: 'hartman', caption: 'Hartman · Feyenoord TV'}]
   }
 };
+let currentProject;
 const projectDialog = document.querySelector('#project-dialog');
 const videoDialog = document.querySelector('#video-dialog');
 const player = document.querySelector('#video-player');
@@ -79,6 +93,7 @@ document.querySelectorAll('dialog').forEach(dialog => {
 });
 document.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', () => {
   const project = projects[button.dataset.project];
+  currentProject = project;
   document.querySelector('#project-dialog-title').textContent = project.title;
   document.querySelector('#project-dialog-category').textContent = project.category;
   document.querySelector('#project-dialog-description').textContent = project.description;
@@ -92,11 +107,15 @@ document.querySelectorAll('[data-project]').forEach(button => button.addEventLis
     section.append(heading, label, prompt); stories.append(section);
   });
   const gallery = document.querySelector('#project-gallery'); gallery.replaceChildren();
-  project.gallery.forEach(photo => {
+  project.gallery.forEach((photo, index) => {
     const figure = document.createElement('figure');
     const image = document.createElement('img'); image.src = `assets/${photo.image}.webp`; image.alt = photo.caption; image.loading = 'lazy';
     const caption = document.createElement('figcaption'); caption.textContent = photo.caption;
-    figure.append(image, caption); gallery.append(figure);
+    const open = document.createElement('button'); open.className = 'photo-open';
+    open.setAttribute('aria-label', `Vergroot foto: ${photo.caption}`);
+    const hint = document.createElement('span'); hint.className = 'photo-hint'; hint.textContent = 'Vergroot';
+    open.append(image, hint); open.addEventListener('click', () => openPhotos(index));
+    figure.append(open, caption); gallery.append(figure);
   });
   const image = document.querySelector('#project-dialog-image'); image.src = `assets/${project.image}.webp`; image.alt = button.querySelector('img').alt;
   const play = document.querySelector('#project-video-button'); play.hidden = !project.video;
@@ -117,3 +136,44 @@ function openVideo(key) {
 player.addEventListener('error', () => { if (player.hasAttribute('src')) document.querySelector('.video-error').hidden = false; });
 document.querySelectorAll('[data-video]').forEach(button => button.addEventListener('click', () => openVideo(button.dataset.video)));
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+// Schermvullende galerij blijft boven het projectvenster; sluiten herstelt de focus.
+const photoDialog = document.querySelector('#photo-dialog');
+let photoIndex = 0;
+function showPhoto(index) {
+  const photos = currentProject.gallery;
+  photoIndex = (index + photos.length) % photos.length;
+  const photo = photos[photoIndex];
+  const image = document.querySelector('#photo-full');
+  image.src = `assets/${photo.image}.webp`; image.alt = photo.caption;
+  document.querySelector('#photo-caption').textContent = photo.caption;
+  document.querySelector('#photo-count').textContent = `${photoIndex + 1} / ${photos.length}`;
+  photoDialog.querySelectorAll('.photo-nav').forEach(button => { button.hidden = photos.length < 2; });
+}
+function openPhotos(index) {
+  document.querySelector('#photo-title').textContent = currentProject.title;
+  showPhoto(index); openDialog(photoDialog);
+}
+document.querySelector('.project-cover').addEventListener('click', () => {
+  openPhotos(Math.max(0, currentProject.gallery.findIndex(photo => photo.image === currentProject.image)));
+});
+document.querySelector('.photo-prev').addEventListener('click', () => showPhoto(photoIndex - 1));
+document.querySelector('.photo-next').addEventListener('click', () => showPhoto(photoIndex + 1));
+photoDialog.addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    event.preventDefault(); showPhoto(photoIndex + (event.key === 'ArrowRight' ? 1 : -1));
+  }
+});
+let touchStart;
+const photoStage = document.querySelector('.photo-stage');
+photoStage.addEventListener('touchstart', event => {
+  touchStart = event.touches.length === 1 ? {x:event.touches[0].clientX,y:event.touches[0].clientY} : null;
+}, {passive:true});
+photoStage.addEventListener('touchend', event => {
+  if (!touchStart) return;
+  const dx = event.changedTouches[0].clientX - touchStart.x;
+  const dy = event.changedTouches[0].clientY - touchStart.y;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) showPhoto(photoIndex + (dx < 0 ? 1 : -1));
+  touchStart = null;
+}, {passive:true});
+photoStage.addEventListener('touchcancel', () => { touchStart = null; }, {passive:true});
